@@ -1,21 +1,46 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+class ConteudoEducacional(val nome: String)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+class Aluno(val nome: String)
 
-class Usuario
+enum class Nivel {
+    BASICO, INTERMEDIARIO, DIFICIL
+}
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+class Formacao(val nome: String, val nivel: Nivel) {
+    private val conteudosEducacionais = mutableListOf<ConteudoEducacional>()
+    private val alunosMatriculados = mutableListOf<Aluno>()
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+    fun adicionarConteudoEducacional(conteudoEducacional: ConteudoEducacional) {
+        conteudosEducacionais.add(conteudoEducacional)
+    }
 
-    val inscritos = mutableListOf<Usuario>()
-    
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+    fun matricularAluno(aluno: Aluno) {
+        alunosMatriculados.add(aluno)
+        println("Aluno ${aluno.nome} matriculado com sucesso na formação $nome.")
+    }
+
+    fun exibirDetalhes() {
+        println("Formação: $nome - Nível: $nivel")
+        println("Conteúdos Educacionais:")
+        conteudosEducacionais.forEach { conteudo -> println(" - ${conteudo.nome}") }
+        println("Alunos Matriculados:")
+        alunosMatriculados.forEach { aluno -> println(" - ${aluno.nome}") }
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val conteudo1 = ConteudoEducacional("Kotlin Básico")
+    val conteudo2 = ConteudoEducacional("Desenvolvimento Android")
+    val formacaoAndroid = Formacao("Desenvolvimento de Apps Android", Nivel.INTERMEDIARIO)
+
+    formacaoAndroid.adicionarConteudoEducacional(conteudo1)
+    formacaoAndroid.adicionarConteudoEducacional(conteudo2)
+
+    val aluno1 = Aluno("Ana Silva")
+    val aluno2 = Aluno("João Pedro")
+
+    formacaoAndroid.matricularAluno(aluno1)
+    formacaoAndroid.matricularAluno(aluno2)
+
+    formacaoAndroid.exibirDetalhes()
 }
